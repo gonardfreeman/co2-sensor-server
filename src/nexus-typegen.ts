@@ -14,6 +14,10 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  IncludeInput: { // input type
+    sensor?: boolean | null; // Boolean
+    unit?: boolean | null; // Boolean
+  }
 }
 
 export interface NexusGenEnums {
@@ -52,6 +56,7 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   Query: { // field return type
+    sensor: NexusGenRootTypes['sensor'][]; // [sensor!]!
     unit: NexusGenRootTypes['unit'][]; // [unit!]!
   }
   sensor: { // field return type
@@ -68,6 +73,7 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   Query: { // field return type name
+    sensor: 'sensor'
     unit: 'unit'
   }
   sensor: { // field return type name
@@ -83,6 +89,14 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Query: {
+    unit: { // args
+      include?: NexusGenInputs['IncludeInput'] | null; // IncludeInput
+      label?: string | null; // String
+      name?: string | null; // String
+      sensor_name?: string | null; // String
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
@@ -93,7 +107,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = never;
 

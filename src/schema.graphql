@@ -2,8 +2,26 @@
 ### Do not make changes to this file directly
 
 
+"""Defines what objects that needs to be included"""
+input IncludeInput {
+  sensor: Boolean
+  unit: Boolean
+}
+
 type Query {
-  unit: [unit!]!
+  sensor: [sensor!]!
+  unit(
+    include: IncludeInput
+
+    """label of unit"""
+    label: String
+
+    """name of unit"""
+    name: String
+
+    """name of sensor"""
+    sensor_name: String
+  ): [unit!]!
 }
 
 type sensor {

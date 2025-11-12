@@ -16,17 +16,38 @@ async function main() {
     },
   });
 
-  const sensor = await prisma.sensor.create({
+  const humidity = await prisma.unit.create({
+    data: {
+      name: "humidity",
+      label: "%",
+    },
+  });
+
+  const co2_sensor = await prisma.sensor.create({
     data: {
       name: "co2_sensor",
       unit_id: co2.id,
     },
   });
 
+  const humidity_sensor = await prisma.sensor.create({
+    data: {
+      name: "humidity_sensor",
+      unit_id: humidity.id,
+    },
+  });
+
   await prisma.reading.create({
     data: {
       value: 10,
-      sensor_id: sensor.id,
+      sensor_id: co2_sensor.id,
+    },
+  });
+
+  await prisma.reading.create({
+    data: {
+      value: 100,
+      sensor_id: humidity_sensor.id,
     },
   });
 }
