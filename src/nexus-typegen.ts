@@ -14,9 +14,27 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  FloatFilterInput: { // input type
+    equals?: number | null; // Float
+    gt?: number | null; // Float
+    gte?: number | null; // Float
+    lt?: number | null; // Float
+    lte?: number | null; // Float
+  }
   IncludeInput: { // input type
+    reading?: boolean | null; // Boolean
     sensor?: boolean | null; // Boolean
     unit?: boolean | null; // Boolean
+  }
+  ReadingInputParams: { // input type
+    include?: NexusGenInputs['IncludeInput'] | null; // IncludeInput
+    value?: NexusGenInputs['FloatFilterInput'] | null; // FloatFilterInput
+  }
+  UnitInputParams: { // input type
+    include?: NexusGenInputs['IncludeInput'] | null; // IncludeInput
+    label?: string | null; // String
+    name?: string | null; // String
+    sensor_name?: string | null; // String
   }
 }
 
@@ -33,9 +51,15 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Query: {};
+  reading: { // root type
+    id: number; // Int!
+    sensor_id: number; // Int!
+    value: number; // Int!
+  }
   sensor: { // root type
     id: number; // Int!
     name: string; // String!
+    unit_id: number; // Int!
   }
   unit: { // root type
     id: number; // Int!
@@ -56,29 +80,49 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   Query: { // field return type
+    reading: NexusGenRootTypes['reading'][]; // [reading!]!
     sensor: NexusGenRootTypes['sensor'][]; // [sensor!]!
     unit: NexusGenRootTypes['unit'][]; // [unit!]!
+  }
+  reading: { // field return type
+    id: number; // Int!
+    sensor: NexusGenRootTypes['sensor'] | null; // sensor
+    sensor_id: number; // Int!
+    value: number; // Int!
   }
   sensor: { // field return type
     id: number; // Int!
     name: string; // String!
+    readings: NexusGenRootTypes['reading'][][] | null; // [[reading!]!]
+    unit: NexusGenRootTypes['unit']; // unit!
+    unit_id: number; // Int!
   }
   unit: { // field return type
     id: number; // Int!
     label: string; // String!
     name: string; // String!
-    sensor: NexusGenRootTypes['sensor'][]; // [sensor!]!
+    sensor: NexusGenRootTypes['sensor'] | null; // sensor
   }
 }
 
 export interface NexusGenFieldTypeNames {
   Query: { // field return type name
+    reading: 'reading'
     sensor: 'sensor'
     unit: 'unit'
+  }
+  reading: { // field return type name
+    id: 'Int'
+    sensor: 'sensor'
+    sensor_id: 'Int'
+    value: 'Int'
   }
   sensor: { // field return type name
     id: 'Int'
     name: 'String'
+    readings: 'reading'
+    unit: 'unit'
+    unit_id: 'Int'
   }
   unit: { // field return type name
     id: 'Int'
@@ -90,11 +134,11 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Query: {
+    reading: { // args
+      params?: NexusGenInputs['ReadingInputParams'] | null; // ReadingInputParams
+    }
     unit: { // args
-      include?: NexusGenInputs['IncludeInput'] | null; // IncludeInput
-      label?: string | null; // String
-      name?: string | null; // String
-      sensor_name?: string | null; // String
+      params?: NexusGenInputs['UnitInputParams'] | null; // UnitInputParams
     }
   }
 }

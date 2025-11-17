@@ -5,7 +5,6 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["relationJoins"]
 }
 
 generator nexusPrisma {
@@ -21,7 +20,7 @@ model sensor {
   id       Int       @id @default(autoincrement())
   name     String
   unit     unit      @relation(fields: [unit_id], references: [id])
-  unit_id  Int
+  unit_id  Int       @unique
   readings reading[]
 }
 
@@ -34,8 +33,8 @@ model reading {
 }
 
 model unit {
-  id     Int      @id @default(autoincrement())
+  id     Int     @id @default(autoincrement())
   name   String
   label  String
-  sensor sensor[]
+  sensor sensor?
 }

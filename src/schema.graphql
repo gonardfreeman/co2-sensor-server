@@ -2,36 +2,71 @@
 ### Do not make changes to this file directly
 
 
+input FloatFilterInput {
+  equals: Float
+
+  """greater than"""
+  gt: Float
+
+  """greater than or equal"""
+  gte: Float
+
+  """less than"""
+  lt: Float
+
+  """less than or equal"""
+  lte: Float
+}
+
 """Defines what objects that needs to be included"""
 input IncludeInput {
+  reading: Boolean
   sensor: Boolean
   unit: Boolean
 }
 
 type Query {
+  reading(params: ReadingInputParams): [reading!]!
   sensor: [sensor!]!
-  unit(
-    include: IncludeInput
+  unit(params: UnitInputParams): [unit!]!
+}
 
-    """label of unit"""
-    label: String
+input ReadingInputParams {
+  include: IncludeInput
+  value: FloatFilterInput
+}
 
-    """name of unit"""
-    name: String
+input UnitInputParams {
+  include: IncludeInput
 
-    """name of sensor"""
-    sensor_name: String
-  ): [unit!]!
+  """label of unit"""
+  label: String
+
+  """name of unit"""
+  name: String
+
+  """name of sensor"""
+  sensor_name: String
+}
+
+type reading {
+  id: Int!
+  sensor: sensor
+  sensor_id: Int!
+  value: Int!
 }
 
 type sensor {
   id: Int!
   name: String!
+  readings: [[reading!]!]
+  unit: unit!
+  unit_id: Int!
 }
 
 type unit {
   id: Int!
   label: String!
   name: String!
-  sensor: [sensor!]!
+  sensor: sensor
 }

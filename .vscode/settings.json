@@ -1,3 +1,3 @@
 {
-  "conventionalCommits.scopes": ["server", "units"]
+  "conventionalCommits.scopes": ["server", "units", "schema"]
 }
